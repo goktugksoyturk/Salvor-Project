@@ -1,0 +1,85 @@
+/* ==========================================================================
+   Salvor Logistics — Design Tokens (DARK-FIRST, cinematic)
+   Slate charcoal base + amber accent.
+   ========================================================================== */
+
+:root {
+  /* --- Dark surfaces --- */
+  --bg:    #0e1216;   /* page base — near-black slate */
+  --bg-2:  #12171d;   /* alternating band */
+  --bg-3:  #181f27;   /* cards / surfaces */
+  --bg-4:  #1f2832;   /* raised surface / inputs */
+  --bg-glass: rgba(20, 26, 33, 0.72);
+
+  /* legacy aliases (kept so existing markup stays valid) */
+  --ink:   #0b0e12;
+  --paper: var(--bg);
+  --surface: var(--bg-3);
+
+  /* --- Text --- */
+  --text-strong: #f4f6f8;   /* headings */
+  --text:        #d3d9e0;   /* body */
+  --text-muted:  #98a2ae;   /* secondary */
+  --text-faint:  #6a747f;   /* captions / meta */
+
+  /* --- Lines --- */
+  --line:   rgba(255, 255, 255, 0.09);
+  --line-2: rgba(255, 255, 255, 0.16);
+  --line-3: rgba(255, 255, 255, 0.26);
+
+  /* --- Accent (amber) --- */
+  --accent:       #e3a93d;   /* primary amber on dark */
+  --accent-2:     #f0bb55;   /* hover / highlight */
+  --accent-deep:  #c98a1e;   /* pressed / borders */
+  --accent-soft:  rgba(227, 169, 61, 0.14);
+  --accent-line:  rgba(227, 169, 61, 0.45);
+  --on-accent:    #1a1303;   /* dark text on amber */
+
+  /* --- Typography --- */
+  --font-display: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body:    "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --fs-display: clamp(2.75rem, 1.2rem + 6.2vw, 6rem);
+  --fs-h1:      clamp(2.1rem, 1.3rem + 3.1vw, 3.6rem);
+  --fs-h2:      clamp(1.8rem, 1.25rem + 2.2vw, 2.9rem);
+  --fs-h3:      clamp(1.2rem, 1.04rem + 0.7vw, 1.55rem);
+  --fs-lead:    clamp(1.08rem, 0.98rem + 0.5vw, 1.35rem);
+  --fs-body:    1.02rem;
+  --fs-sm:      0.9rem;
+  --fs-xs:      0.8rem;
+  --fs-eyebrow: 0.76rem;
+
+  --lh-tight: 1.02;
+  --lh-snug:  1.18;
+  --lh-body:  1.7;
+
+  /* --- Layout --- */
+  --container: 1280px;
+  --container-narrow: 940px;
+  --gutter: clamp(20px, 5vw, 64px);
+  --section-y: clamp(72px, 4rem + 6vw, 150px);
+
+  /* --- Radius --- */
+  --radius-sm: 3px;
+  --radius:    7px;
+  --radius-lg: 12px;
+  --radius-pill: 100px;
+
+  /* --- Shadows / glows --- */
+  --shadow:    0 24px 60px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 40px 90px rgba(0, 0, 0, 0.55);
+  --ring:      0 0 0 1px var(--line);
+
+  /* --- Motion --- */
+  --t-fast: 160ms;
+  --t:      300ms;
+  --t-slow: 720ms;
+  --ease:   cubic-bezier(0.22, 0.61, 0.24, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --header-h: 84px;
+}
+
+@media (max-width: 720px) {
+  :root { --header-h: 66px; }
+}

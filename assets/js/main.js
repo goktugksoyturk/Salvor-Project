@@ -45,6 +45,16 @@
     window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
   });
 
+  /* ---------------------------------------------------- WhatsApp click-to-chat (FAB) */
+  var wa = document.createElement("a");
+  wa.className = "wa-fab";
+  wa.href = "https://wa.me/905364839084?text=Hello%20Salvor%20Project%2C%20I%27d%20like%20a%20quote";
+  wa.target = "_blank";
+  wa.rel = "noopener";
+  wa.setAttribute("aria-label", "Chat on WhatsApp");
+  wa.innerHTML = '<svg aria-hidden="true" width="30" height="30"><use href="/assets/icons.svg#i-whatsapp"></use></svg>';
+  document.body.appendChild(wa);
+
   var onProgress = function () {
     var doc = document.documentElement;
     var max = doc.scrollHeight - doc.clientHeight;

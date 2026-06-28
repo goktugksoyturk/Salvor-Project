@@ -10,7 +10,7 @@
   z-index: 300; transition: transform 90ms linear;
 }
 .to-top {
-  position: fixed; right: clamp(16px, 3vw, 28px); bottom: clamp(16px, 3vw, 28px);
+  position: fixed; right: clamp(16px, 3vw, 28px); bottom: calc(clamp(16px, 3vw, 28px) + 64px);
   width: 48px; height: 48px; display: grid; place-items: center; border-radius: 50%;
   background: var(--accent); color: var(--on-accent); border: 0; cursor: pointer;
   opacity: 0; visibility: hidden; transform: translateY(12px);
@@ -19,7 +19,23 @@
 }
 .to-top.is-show { opacity: 1; visibility: visible; transform: none; }
 .to-top:hover { background: var(--accent-2); transform: translateY(-3px); }
-@media (prefers-reduced-motion: reduce) { .scroll-progress { transition: none; } }
+
+/* WhatsApp click-to-chat — always-visible FAB anchored at the bottom; back-to-top stacks above it */
+.wa-fab {
+  position: fixed; right: clamp(16px, 3vw, 28px); bottom: clamp(16px, 3vw, 28px);
+  width: 52px; height: 52px; display: grid; place-items: center; border-radius: 50%;
+  background: #25d366; color: #fff;
+  z-index: 250; box-shadow: 0 12px 32px rgba(0,0,0,0.45);
+  transition: transform var(--t) var(--ease), background var(--t) var(--ease);
+}
+.wa-fab svg { width: 30px; height: 30px; }
+.wa-fab:hover { background: #1ebe5b; transform: translateY(-3px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-progress { transition: none; }
+  .wa-fab { transition: background var(--t) var(--ease); }
+  .wa-fab:hover { transform: none; }
+}
 
 /* --------------------------------------------------------------- Buttons */
 .btn {
@@ -330,6 +346,14 @@
 @media (max-width: 900px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 40px 32px; } }
 @media (max-width: 520px) { .footer-top { grid-template-columns: 1fr; } }
 .footer-brand p { margin-top: 18px; color: var(--text-muted); font-size: 0.94rem; max-width: 34ch; }
+.footer-social { display: flex; gap: 12px; margin-top: 22px; }
+.footer-social a {
+  width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%;
+  background: var(--bg-3); border: 1px solid var(--line); color: var(--text-muted);
+  transition: color var(--t) var(--ease), border-color var(--t) var(--ease), background var(--t) var(--ease), transform var(--t) var(--ease);
+}
+.footer-social a:hover { color: var(--accent); border-color: var(--accent-line); transform: translateY(-2px); }
+.footer-social svg { width: 19px; height: 19px; }
 .footer-col h4 { font-family: var(--font-display); font-size: 0.76rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 16px; font-weight: 600; }
 .footer-col ul { list-style: none; padding: 0; display: grid; gap: 11px; }
 .footer-col a, .footer-col li { color: var(--text-muted); font-size: 0.94rem; }

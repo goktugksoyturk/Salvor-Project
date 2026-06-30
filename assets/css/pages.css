@@ -126,6 +126,11 @@
 .media-badge .n { font-family: var(--font-display); font-weight: 800; font-size: 2rem; color: var(--accent); line-height: 1; }
 .media-badge .t { font-size: 0.84rem; color: var(--text); line-height: 1.4; }
 
+/* Full-width office photo banner (offices / hubs sections) */
+.office-banner { border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow); }
+.office-banner img { display: block; width: 100%; height: 100%; object-fit: cover; aspect-ratio: 21 / 9; }
+@media (max-width: 720px) { .office-banner img { aspect-ratio: 16 / 10; } }
+
 /* --------------------------------------------------------------- Service detail */
 .svc-detail { scroll-margin-top: calc(var(--header-h) + 24px); }
 .svc-detail + .svc-detail { margin-top: clamp(64px, 9vw, 120px); padding-top: clamp(64px, 9vw, 120px); border-top: 1px solid var(--line); }
@@ -192,6 +197,8 @@
 .office address { font-style: normal; margin-top: 8px; color: var(--text-muted); font-size: 0.94rem; line-height: 1.55; }
 .map { border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--line); background: var(--bg-3); aspect-ratio: 16 / 8; }
 .map iframe { width: 100%; height: 100%; border: 0; display: block; filter: grayscale(0.4) invert(0.9) contrast(0.9) hue-rotate(180deg); }
+/* Light theme: drop the dark-map inversion so the map renders naturally */
+[data-theme="light"] .map iframe { filter: grayscale(0.25) contrast(0.95); }
 
 /* --------------------------------------------------------------- 404 */
 .notfound { min-height: 72vh; display: grid; place-items: center; text-align: center; padding-top: var(--header-h); }

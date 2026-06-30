@@ -65,7 +65,7 @@ strong { font-weight: 600; color: var(--text-strong); }
 .section--paper2,
 .section--surface { background: var(--bg-2); }
 .section--dark { background: var(--bg); }
-.section--deep { background: #0a0d10; }
+.section--deep { background: var(--bg-deep); }
 
 /* divider hairline at section tops where needed */
 .section--hr { border-top: 1px solid var(--line); }

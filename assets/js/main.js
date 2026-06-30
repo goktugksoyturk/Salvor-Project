@@ -30,6 +30,49 @@
   onHeader();
   window.addEventListener("scroll", onHeader, { passive: true });
 
+  /* ---------------------------------------------------- Theme toggle (dark / light)
+     The saved theme is applied pre-paint by a tiny inline <head> script; here we
+     just inject the toggle button and wire clicks + persistence. */
+  (function () {
+    var root = document.documentElement;
+    var meta = document.querySelector('meta[name="theme-color"]');
+    var THEME_KEY = "salvor-theme";
+    var META_COLOR = { dark: "#0e1216", light: "#f3f5f9" };
+
+    var current = function () { return root.getAttribute("data-theme") === "light" ? "light" : "dark"; };
+
+    var btn = document.createElement("button");
+    btn.className = "theme-toggle";
+    btn.id = "themeToggle";
+    btn.type = "button";
+    btn.innerHTML =
+      '<svg class="theme-toggle__icon theme-toggle__sun" aria-hidden="true"><use href="/assets/icons.svg#i-sun"></use></svg>' +
+      '<svg class="theme-toggle__icon theme-toggle__moon" aria-hidden="true"><use href="/assets/icons.svg#i-moon"></use></svg>';
+
+    var apply = function (theme, persist) {
+      if (theme === "light") root.setAttribute("data-theme", "light");
+      else root.removeAttribute("data-theme");
+      if (meta) meta.setAttribute("content", META_COLOR[theme]);
+      if (persist) { try { localStorage.setItem(THEME_KEY, theme); } catch (e) {} }
+      var next = theme === "light" ? "dark" : "light";
+      btn.setAttribute("aria-label", "Switch to " + next + " theme");
+      btn.setAttribute("title", "Switch to " + next + " theme");
+      btn.setAttribute("aria-pressed", theme === "light" ? "true" : "false");
+    };
+
+    var navBar = document.querySelector(".site-header .nav");
+    var hamburger = document.getElementById("navToggle");
+    if (navBar) {
+      if (hamburger) navBar.insertBefore(btn, hamburger);
+      else navBar.appendChild(btn);
+    }
+
+    apply(current(), false); // sync the button label to whatever the head script set
+    btn.addEventListener("click", function () {
+      apply(current() === "light" ? "dark" : "light", true);
+    });
+  })();
+
   /* ---------------------------------------------------- Scroll progress + back-to-top */
   var progress = document.createElement("div");
   progress.className = "scroll-progress";

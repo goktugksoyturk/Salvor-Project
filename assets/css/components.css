@@ -110,9 +110,16 @@
 .brand { display: inline-flex; align-items: center; gap: 12px; }
 .brand__logo {
   height: 46px; width: auto; display: block;
-  background: #fff; padding: 8px 13px; border-radius: 8px; box-sizing: border-box;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.45));
 }
-@media (max-width: 720px) { .brand__logo { height: 40px; padding: 7px 11px; } }
+/* Logo is white by default (dark heroes / dark stuck header / dark footer).
+   Only when the header is stuck in LIGHT theme does it sit on a light glass bar,
+   so swap to the colour logo there. Footer stays dark in both themes -> white. */
+html[data-theme="light"] .site-header.is-stuck .brand__logo {
+  content: url("/assets/img/logo.png");
+  filter: none;
+}
+@media (max-width: 720px) { .brand__logo { height: 40px; } }
 .brand__mark { width: 40px; height: 40px; border-radius: 9px; flex: none; }
 .brand__text {
   font-family: var(--font-display); font-weight: 800; font-size: 1.16rem;
@@ -157,6 +164,44 @@
 .nav__toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
 .nav__toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
 .nav__toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+/* Keep the brand pinned left so the nav + theme toggle + hamburger cluster
+   on the right at every breakpoint (works whether or not nav__links is in flow) */
+.nav .brand { margin-inline-end: auto; }
+
+/* --- Theme toggle (dark/light) — injected into the header by main.js --- */
+.theme-toggle {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 46px; height: 46px; flex: none; padding: 0;
+  border: 1px solid var(--line-2); border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.04); color: var(--text-strong);
+  cursor: pointer;
+  transition: background var(--t) var(--ease), border-color var(--t) var(--ease), color var(--t) var(--ease);
+}
+.theme-toggle:hover { border-color: var(--accent-line); color: var(--accent); }
+.theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.theme-toggle svg { width: 20px; height: 20px; display: block; }
+/* Show the sun in dark mode ("switch to light"), the moon in light mode */
+.theme-toggle .theme-toggle__moon { display: none; }
+[data-theme="light"] .theme-toggle { background: rgba(22, 35, 79, 0.04); }
+[data-theme="light"] .theme-toggle .theme-toggle__sun { display: none; }
+[data-theme="light"] .theme-toggle .theme-toggle__moon { display: block; }
+
+/* Light theme: at the top of every page the fixed header is transparent over
+   the DARK hero (heroes stay dark in both themes), so keep the bar's controls
+   light until the header gains its glass background on scroll (.is-stuck). */
+[data-theme="light"] .site-header:not(.is-stuck) .theme-toggle,
+[data-theme="light"] .site-header:not(.is-stuck) .nav__toggle {
+  color: #fff; border-color: rgba(255, 255, 255, 0.24); background: rgba(255, 255, 255, 0.07);
+}
+[data-theme="light"] .site-header:not(.is-stuck) .theme-toggle:hover { color: var(--accent-2); }
+[data-theme="light"] .site-header:not(.is-stuck) .nav__toggle span { background: #fff; }
+/* nav links live in the transparent bar only on desktop; on mobile they drop
+   into a solid light panel where the default navy text is correct */
+@media (min-width: 901px) {
+  [data-theme="light"] .site-header:not(.is-stuck) .nav__links a:not(.btn) { color: #fff; }
+  [data-theme="light"] .site-header:not(.is-stuck) .nav__links a[aria-current="page"] { color: var(--accent-2); }
+}
 
 @media (max-width: 900px) {
   .nav__toggle { display: block; }

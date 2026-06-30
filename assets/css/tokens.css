@@ -10,6 +10,7 @@
   --bg-3:  #181f27;   /* cards / surfaces */
   --bg-4:  #1f2832;   /* raised surface / inputs */
   --bg-glass: rgba(20, 26, 33, 0.72);
+  --bg-deep:  #0a0d10;   /* deepest band (CTA / closers) */
 
   /* legacy aliases (kept so existing markup stays valid) */
   --ink:   #0b0e12;
@@ -34,6 +35,7 @@
   --accent-soft:  rgba(227, 169, 61, 0.14);
   --accent-line:  rgba(227, 169, 61, 0.45);
   --on-accent:    #1a1303;   /* dark text on amber */
+  --accent-green: #2f8f5a;   /* logo green — sparing secondary accent */
 
   /* --- Typography --- */
   --font-display: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -78,6 +80,51 @@
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
   --header-h: 84px;
+}
+
+/* ==========================================================================
+   LIGHT THEME — opt-in via [data-theme="light"] on <html>.
+   Echoes the logo: navy text + cool navy-tinted whites. Amber stays the
+   action accent; logo green is the sparing secondary. Dark stays the default
+   (no attribute = the :root values above, untouched).
+   Photo-overlay gradients remain dark by design and are NOT redefined here.
+   ========================================================================== */
+[data-theme="light"] {
+  /* --- Cool, navy-tinted light surfaces --- */
+  --bg:    #f3f5f9;   /* page base — soft cool off-white */
+  --bg-2:  #e7ecf3;   /* alternating band */
+  --bg-3:  #ffffff;   /* cards / surfaces */
+  --bg-4:  #ffffff;   /* raised surface / inputs */
+  --bg-glass: rgba(255, 255, 255, 0.72);
+  --bg-deep:  #e4e9f1;   /* deepest band (CTA / closers) */
+
+  --ink:   #0b0e12;
+  --paper: var(--bg);
+  --surface: var(--bg-3);
+
+  /* --- Text (logo navy drives the scale) --- */
+  --text-strong: #16234f;   /* logo navy — headings */
+  --text:        #2c3858;   /* navy-tinted body */
+  --text-muted:  #5b657d;   /* secondary */
+  --text-faint:  #8b94a6;   /* captions / meta */
+
+  /* --- Lines (navy-tinted) --- */
+  --line:   rgba(22, 35, 79, 0.12);
+  --line-2: rgba(22, 35, 79, 0.18);
+  --line-3: rgba(22, 35, 79, 0.30);
+
+  /* --- Accent: amber kept, deepened so it reads on white --- */
+  --accent:       #c98a1e;
+  --accent-2:     #e3a93d;
+  --accent-deep:  #9c6c12;
+  --accent-soft:  rgba(201, 138, 30, 0.13);
+  --accent-line:  rgba(201, 138, 30, 0.42);
+  --on-accent:    #1a1303;
+  --accent-green: #1b5a37;   /* logo green on light */
+
+  /* --- Shadows tuned for light (navy-tinted, softer) --- */
+  --shadow:    0 18px 50px rgba(22, 35, 79, 0.12);
+  --shadow-lg: 0 30px 70px rgba(22, 35, 79, 0.16);
 }
 
 @media (max-width: 720px) {

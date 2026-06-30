@@ -83,6 +83,20 @@
   content: ""; position: absolute; inset: 0; z-index: -2;
   background: linear-gradient(90deg, rgba(8,11,14,0.93), rgba(8,11,14,0.62)), linear-gradient(180deg, rgba(8,11,14,0.6), rgba(8,11,14,0.85));
 }
+/* Interior heroes that showcase the office photos: show the photo at full
+   strength. The scrim is pulled to the left edge (behind the text) and clears
+   completely on the right so the photo + SALVOR signage read plainly; a text
+   shadow keeps the white headline legible over the brighter image. */
+.page-hero--office .page-hero__bg img { opacity: 1; }
+.page-hero--office::before {
+  background:
+    linear-gradient(90deg, rgba(8,11,14,0.82) 0%, rgba(8,11,14,0.5) 26%, rgba(8,11,14,0.15) 52%, rgba(8,11,14,0) 78%),
+    linear-gradient(180deg, rgba(8,11,14,0.08), rgba(8,11,14,0.28));
+}
+.page-hero--office .eyebrow,
+.page-hero--office h1,
+.page-hero--office p,
+.page-hero--office .breadcrumb { text-shadow: 0 1px 18px rgba(0,0,0,0.6); }
 .page-hero .eyebrow { color: var(--accent); }
 .page-hero h1 { margin-top: 18px; color: #fff; font-size: var(--fs-h1); }
 .page-hero p { margin-top: 18px; max-width: 64ch; font-size: var(--fs-lead); color: rgba(255,255,255,0.82); line-height: 1.55; }

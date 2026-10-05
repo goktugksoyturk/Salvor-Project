@@ -185,11 +185,11 @@
   /* ---------------------------------------------------- Contact form */
   var form = document.getElementById("contactForm");
   if (form) {
-    /* --- EmailJS config — paste these in from your EmailJS dashboard --- */
-    var EMAILJS_PUBLIC_KEY    = ""; // Account → General → Public Key
-    var EMAILJS_SERVICE_ID    = ""; // Email Services → your service → Service ID
-    var EMAILJS_TEMPLATE_TEAM = ""; // Template that notifies your team (To: info@salvorproject.com)
-    var EMAILJS_TEMPLATE_USER = ""; // Template that confirms to the customer (To: {{email}}) — optional
+    var emailConfig = window.SALVOR_EMAIL_CONFIG || {};
+    var EMAILJS_PUBLIC_KEY    = emailConfig.publicKey || "";
+    var EMAILJS_SERVICE_ID    = emailConfig.serviceId || "";
+    var EMAILJS_TEMPLATE_TEAM = emailConfig.teamTemplateId || "";
+    var EMAILJS_TEMPLATE_USER = emailConfig.userTemplateId || "";
 
     var status = document.getElementById("formStatus");
     var setStatus = function (msg, ok) {
@@ -198,7 +198,7 @@
       status.className = "form-status is-show " + (ok ? "is-ok" : "is-err");
     };
 
-    var emailjsReady = EMAILJS_PUBLIC_KEY && EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_TEAM && (typeof emailjs !== "undefined");
+    var emailjsReady = EMAILJS_PUBLIC_KEY && EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_TEAM && EMAILJS_TEMPLATE_USER && (typeof emailjs !== "undefined");
     if (emailjsReady) { try { emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY }); } catch (err) { emailjsReady = false; } }
 
     form.addEventListener("submit", function (e) {
@@ -227,24 +227,22 @@
         return "mailto:info@salvorproject.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(lines.join("\n"));
       };
 
-      /* No EmailJS configured yet → fall back to the visitor's mail client */
+      /* No EmailJS configured yet -> fall back to the visitor's mail client. */
       if (!emailjsReady) {
         window.location.href = buildMailto();
-        setStatus("Opening your email client to send the request to info@salvorproject.com…", true);
+        setStatus("Email delivery is not configured yet. Opening your email client instead…", true);
         return;
       }
 
       if (btn) { btn.disabled = true; btn.dataset.label = btn.textContent; btn.textContent = "Sending…"; }
 
-      /* 1) Notify the Salvor team (the lead — this is the one that must succeed).
-         2) Best-effort confirmation to the customer (never blocks the lead).      */
-      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_TEAM, params)
+      Promise.all([
+        emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_TEAM, params),
+        emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_USER, params)
+      ])
         .then(function () {
-          if (EMAILJS_TEMPLATE_USER) {
-            emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_USER, params).catch(function () {});
-          }
           form.reset();
-          setStatus("Thank you — your request has been received. Our team will respond within one business day.", true);
+          setStatus("Thank you - your request has been received. A confirmation has been sent to your email, and our team will respond within one business day.", true);
         })
         .catch(function () {
           setStatus("Something went wrong sending your request. Please email info@salvorproject.com directly.", false);
